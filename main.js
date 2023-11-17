@@ -48,8 +48,8 @@ const signIn = () => {
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then((result) => {
             // Signed in 
-            // document.write("You are Signed In" )
-            window.location.assign("./create-id.html");
+            document.write("You are Signed In" )
+            window.location.assign("./subject.html");
 
             // console.log(result)
         })
