@@ -24,7 +24,7 @@
 
                 <div class="text logo-text">
                     <span class="name">Semester-1</span>
-                    <span class="profession">BCA Attandance</span>
+                    <span class="profession">BCA Attendance</span>
                 </div>
             </div>
 
@@ -44,7 +44,7 @@
                     <li class="nav-link">
                         <a href="../sem1/subjects/sub1.html">
                             <!-- <i class='bx bx-home-alt icon' ></i> -->
-                            <P>SUB-1</P>
+                            <P>C-Programming</P>
                         </a>
                     </li>
 
@@ -73,8 +73,13 @@
                     </li>
 
                     <li class="nav-link">
-                        <a href="#">
-                            <P>SUB-6</P>
+                        <a href="./add.html">
+                            <P>Add</P>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="./check.html">
+                            <P>Check</P>
                         </a>
                     </li>
 
@@ -107,10 +112,88 @@
     </nav>
 
     <section class="home">
-        <div class="text">The online Attandance System BCA SEM-1.</div>
+        <div class="text">The online Attendance System BCA SEM-1.</div>
     </section>
 
     <script src="../script.js"></script>
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+      
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+      
+      
+      
+        const firebaseConfig = {
+      
+          apiKey: "AIzaSyBYIVxC6Lcitpuc48gkuegXgwGYQnAXCvQ",
+      
+      
+      
+      authDomain: "attandance-lcb.firebaseapp.com",
+      
+      
+      
+      databaseURL: "https://attandance-lcb-default-rtdb.firebaseio.com",
+      
+      
+      
+      projectId: "attandance-lcb",
+      
+      
+      
+      storageBucket: "attandance-lcb.appspot.com",
+      
+      
+      
+      messagingSenderId: "4474297257",
+      
+      
+      
+      appId: "1:4474297257:web:8e6e416127c19b034442b8",
+      
+      
+      
+      measurementId: "G-427HG10G4F"
+      
+      
+      
+      
+      
+        };
+      
+      
+      
+        const app = initializeApp(firebaseConfig);
+      
+        const auth = getAuth();
+      
+        console.log(app);
+      
+      
+      
+        onAuthStateChanged(auth, (user) => {
+      
+            if (user) {
+      
+              alert("Welcome to teachers");
+      
+              //   console.log(user);
+      
+                
+      
+            } else {
+      
+                // User is not signed in, redirect to the login page
+      
+                window.location.href = "./index.html";
+      
+            }
+      
+        });
+      
+      
+</script>      
 
 </body>
 </html>
