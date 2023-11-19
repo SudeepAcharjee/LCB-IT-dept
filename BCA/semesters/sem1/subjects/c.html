@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Realtime Fetching From Firebase Databases</title>
+    <title>C Attendance sem1</title>
     <style>
         .container{
             max-width: 900px;
@@ -108,44 +108,85 @@
             });
         }
     </script>
-    <script type="module">
+   
+      
+   <script type="module">
 
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-      
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
-      
-    
-      
-      
-        const app = initializeApp(firebaseConfig);
-      
-        const auth = getAuth();
-      
-        console.log(app);
-      
-      
-      
-        onAuthStateChanged(auth, (user) => {
-      
-            if (user) {
-      
-              alert("Welcome to teachers");
-      
-              //   console.log(user);
-      
-                
-      
-            } else {
-      
-                // User is not signed in, redirect to the login page
-      
-                window.location.href = "./index.html";
-      
-            }
-      
-        });
-      
-      
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+  
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+  
+  
+  
+    const firebaseConfig = {
+  
+      apiKey: "AIzaSyBYIVxC6Lcitpuc48gkuegXgwGYQnAXCvQ",
+  
+  
+  
+  authDomain: "attandance-lcb.firebaseapp.com",
+  
+  
+  
+  databaseURL: "https://attandance-lcb-default-rtdb.firebaseio.com",
+  
+  
+  
+  projectId: "attandance-lcb",
+  
+  
+  
+  storageBucket: "attandance-lcb.appspot.com",
+  
+  
+  
+  messagingSenderId: "4474297257",
+  
+  
+  
+  appId: "1:4474297257:web:8e6e416127c19b034442b8",
+  
+  
+  
+  measurementId: "G-427HG10G4F"
+  
+  
+  
+  
+  
+    };
+  
+  
+  
+    const app = initializeApp(firebaseConfig);
+  
+    const auth = getAuth();
+  
+    console.log(app);
+  
+  
+  
+    onAuthStateChanged(auth, (user) => {
+  
+        if (user) {
+  
+          alert("Welcome to teachers");
+  
+          //   console.log(user);
+  
+            
+  
+        } else {
+  
+            // User is not signed in, redirect to the login page
+  
+            window.location.href = "error.html";
+  
+        }
+  
+    });
+  
+  
 </script>      
 </body>
 </html>
