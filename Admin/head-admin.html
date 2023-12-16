@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Login</title>
-    <link rel="stylesheet" href="../style.css" />
+    <title>Head Admin Login</title>
+    <link rel="stylesheet" href="style.css" />
     <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-auth-compat.js"></script>
@@ -40,7 +40,7 @@
   <body>
     <a class="top-right-button" href="../index.html">Go back</a>
     <div class="form">
-      <h2>Login as Teacher</h2>
+      <h2>Login as Head Admin</h2>
       <!-- Email  -->
       <div class="email">
         <label for="email">Email</label>
@@ -63,49 +63,9 @@
       </div>
 
       <!-- Sign Up button -->
-      <button id="submit-btn" onclick="signIn()">Sign In</button>
+      <button id="submit-btn" onclick="signIn()">Login</button>
     </div>
 
-    <script src="../main.js"></script>
-    <!-- <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-      import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
-  
-      const firebaseConfig = {
-        apiKey: "AIzaSyBYIVxC6Lcitpuc48gkuegXgwGYQnAXCvQ",
-
-authDomain: "attandance-lcb.firebaseapp.com",
-
-databaseURL: "https://attandance-lcb-default-rtdb.firebaseio.com",
-
-projectId: "attandance-lcb",
-
-storageBucket: "attandance-lcb.appspot.com",
-
-messagingSenderId: "4474297257",
-
-appId: "1:4474297257:web:8e6e416127c19b034442b8",
-
-measurementId: "G-427HG10G4F"
-
-
-      };
-  
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth();
-      console.log(app);
-  
-      onAuthStateChanged(auth, (user) => {
-          if (user) {
-            alert("Welcome to teachers");
-            //   console.log(user);
-              
-          } else {
-              // User is not signed in, redirect to the login page
-              window.location.href = "../index.html";
-          }
-      });
-
-  </script> -->
+    <script src="./main2.js"></script>
   </body>
 </html>

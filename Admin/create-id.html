@@ -41,7 +41,7 @@
     
     <!-- <a class="top-right-button" href="./signIn.html">Login||Admin</a> -->
     <a class="top-left-button" href="https://console.firebase.google.com/u/1/project/attandance-lcb/authentication/users">Go to database</a>
-    <a class="top-right-button" href="./index.html">Home</a> 
+    <a class="top-right-button" href="../index.html">Home</a> 
     <div class="form">
       <h3>Generate Id for teachers</h3>
       <!-- Email  -->
@@ -93,7 +93,7 @@ measurementId: "G-15RQWD959V"
   
       const app = initializeApp(firebaseConfig);
       const auth = getAuth();
-      console.log(app);
+      console.log(app);http://127.0.0.1:5501/Admin/create-id.html
   
       onAuthStateChanged(auth, (user) => {
           if (user) {
@@ -102,7 +102,7 @@ measurementId: "G-15RQWD959V"
               
           } else {
               // User is not signed in, redirect to the login page
-              window.location.href = "./index.html";
+              window.location.href = "../index.html";
           }
       });
 
