@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Semester Selection</title>
+</head>
+<body>
+    <h2>BSC-IT Attendance System</h2>
+    <div class="container">
+        
+        <h1>Select Semester</h1>
+        <div class="semester-selection">
+            <a href="semester.html?sem=1">Semester 1</a>
+            <a href="semester.html?sem=2">Semester 2</a>
+            <a href="semester.html?sem=3">Semester 3</a>
+            <a href="semester.html?sem=4">Semester 4</a>
+            <a href="semester.html?sem=5">Semester 5</a>
+            <a href="semester.html?sem=6">Semester 6</a>
+           
+        </div>
+        <div class="button-container">
+            <button class="add-student-btn">Add Student</button>
+            <button class="logout-btn">Logout</button>
+        </div>
+        
+    </div>
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+
+
+
+        const firebaseConfig = {
+
+            apiKey: "AIzaSyBYIVxC6Lcitpuc48gkuegXgwGYQnAXCvQ",
+
+
+
+            authDomain: "attandance-lcb.firebaseapp.com",
+
+
+
+            databaseURL: "https://attandance-lcb-default-rtdb.firebaseio.com",
+
+
+
+            projectId: "attandance-lcb",
+
+
+
+            storageBucket: "attandance-lcb.appspot.com",
+
+
+
+            messagingSenderId: "4474297257",
+
+
+
+            appId: "1:4474297257:web:8e6e416127c19b034442b8",
+
+
+
+            measurementId: "G-427HG10G4F"
+
+
+
+
+
+        };
+
+
+
+        const app = initializeApp(firebaseConfig);
+
+        const auth = getAuth();
+
+        console.log(app);
+
+
+
+        onAuthStateChanged(auth, (user) => {
+
+            if (user) {
+
+                alert("Welcome teachers to BSC online Attendance System");
+
+                //   console.log(user);
+
+
+
+            } else {
+
+                // User is not signed in, redirect to the login page
+
+                window.location.href = "../index.html";
+
+            }
+
+        });
+    </script>
+</body>
+</html>
