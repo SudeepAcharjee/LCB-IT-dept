@@ -1,20 +1,19 @@
 // setting up firebase with our website
 const firebaseApp = firebase.initializeApp({
-    apiKey: "AIzaSyBYIVxC6Lcitpuc48gkuegXgwGYQnAXCvQ",
+    apiKey: "AIzaSyA6w5I07tZYvLe7eDclzk2LesZHgukS2Fc",
 
-authDomain: "attandance-lcb.firebaseapp.com",
-
-databaseURL: "https://attandance-lcb-default-rtdb.firebaseio.com",
-
-projectId: "attandance-lcb",
-
-storageBucket: "attandance-lcb.appspot.com",
-
-messagingSenderId: "4474297257",
-
-appId: "1:4474297257:web:8e6e416127c19b034442b8",
-
-measurementId: "G-427HG10G4F"
+    authDomain: "attendance-system-9297a.firebaseapp.com",
+  
+    databaseURL: "https://attendance-system-9297a-default-rtdb.firebaseio.com",
+  
+    projectId: "attendance-system-9297a",
+  
+    storageBucket: "attendance-system-9297a.appspot.com",
+  
+    messagingSenderId: "415117796338",
+  
+    appId: "1:415117796338:web:fcdf8ecf947bca306c416b"
+  
   
 });
 const db = firebaseApp.firestore();
