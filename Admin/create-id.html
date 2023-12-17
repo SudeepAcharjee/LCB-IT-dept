@@ -1,111 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <style>
-      .top-right-button {
-        position: fixed;
-        top: 10px;
-        right: 10px;
-        background-color: #0077be;
-        color: #fff;
-        padding: 10px 20px;
-        border-radius: 20px;
-        text-decoration: none;
-      }
-      
-      .top-left-button {
-        position: fixed;
-        top: 10px;
-        left: 10px;
-        background-color: #0077be;
-        color: #fff;
-        padding: 10px 20px;
-        border-radius: 20px;
-        text-decoration: none;
-      }
-      h3{
-        text-align: center;
-      }
-    </style>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Generate||Admin</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
-    <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-auth-compat.js"></script>
-  </head>
-  <body>
-    
-    <!-- <a class="top-right-button" href="./signIn.html">Login||Admin</a> -->
-    <a class="top-left-button" href="https://console.firebase.google.com/u/1/project/attandance-lcb/authentication/users">Go to database</a>
-    <a class="top-right-button" href="../index.html">Home</a> 
-    <div class="form">
-      <h3>Generate Id for teachers</h3>
-      <!-- Email  -->
-      <div class="email">
-        <label for="email">Email</label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Write your email"
-        />
-      </div>
-      <!-- passWord -->
-      <div class="pass">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="password"
-        />
-      </div>
 
-      <!-- Sign Up button -->
-      <button id="submit-btn" onclick="signUp()">Generate</button>
-     
+<head>
+  <style>
+    .top-right-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background-color: #0077be;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      text-decoration: none;
+    }
+
+    .top-left-button {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background-color: #0077be;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      text-decoration: none;
+    }
+
+    h3 {
+      text-align: center;
+    }
+  </style>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generate||Admin</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+  <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-auth-compat.js"></script>
+</head>
+
+<body>
+
+  <!-- <a class="top-right-button" href="./signIn.html">Login||Admin</a> -->
+  <a class="top-left-button"
+    href="https://console.firebase.google.com/u/1/project/attandance-lcb/authentication/users">Go to database</a>
+  <a class="top-right-button" href="../index.html">Home</a>
+  <div class="form">
+    <h3>Generate Id for teachers</h3>
+    <!-- Email  -->
+    <div class="email">
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" placeholder="Write your email" />
+    </div>
+    <!-- passWord -->
+    <div class="pass">
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" placeholder="password" />
+    </div>
+
+    <!-- Sign Up button -->
+    <button id="submit-btn" onclick="signUp()">Generate</button>
+
 
     <script src="main.js"></script>
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
       import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
-  
+
       const firebaseConfig = {
         apiKey: "AIzaSyB49_tpK54e5JGwYnt86kTkURF1bWcDzxM",
 
-authDomain: "head-admin-attandance.firebaseapp.com",
+        authDomain: "head-admin-attandance.firebaseapp.com",
 
-projectId: "head-admin-attandance",
+        projectId: "head-admin-attandance",
 
-storageBucket: "head-admin-attandance.appspot.com",
+        storageBucket: "head-admin-attandance.appspot.com",
 
-messagingSenderId: "119802161037",
+        messagingSenderId: "119802161037",
 
-appId: "1:119802161037:web:839fb77496f6972585bfc4",
+        appId: "1:119802161037:web:839fb77496f6972585bfc4",
 
-measurementId: "G-15RQWD959V"
+        measurementId: "G-15RQWD959V"
 
       };
-  
+
       const app = initializeApp(firebaseConfig);
       const auth = getAuth();
-      console.log(app);http://127.0.0.1:5501/Admin/create-id.html
-  
+      console.log(app); http://127.0.0.1:5501/Admin/create-id.html
+
       onAuthStateChanged(auth, (user) => {
-          if (user) {
-            alert("Welcome to Head Admin ..You can create id for teachers");
-            //   console.log(user);
-              
-          } else {
-              // User is not signed in, redirect to the login page
-              window.location.href = "../index.html";
-          }
+        if (user) {
+          alert("Welcome to Head Admin ..You can create id for teachers");
+          //   console.log(user);
+
+        } else {
+          // User is not signed in, redirect to the login page
+          window.location.href = "../index.html";
+        }
       });
 
-  </script>
-  </body>
+    </script>
+</body>
+
 </html>
