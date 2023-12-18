@@ -108,7 +108,7 @@
         const dataContainer = document.querySelector('tbody');
 
         // give complete path to fetch data as given during sending
-        var fetchedData = database.ref('BSC/2nd-sem/');
+        var fetchedData = database.ref('BSC/5th-sem/');
         fetchedData.on('value', (snapshot) => {
             var data = snapshot.val();
             // now set data in the table
@@ -132,7 +132,7 @@
 
         function countClicks(entryId) {
             // Reference to the specific entry's click count in the database
-            var CProgrammingRef = database.ref('BSC/2nd-sem/' + entryId + '/sub2');
+            var CProgrammingRef = database.ref('BSC/5th-sem/' + entryId + '/sub2');
 
             // Transaction to increment the click count
             CProgrammingRef.transaction(function(currentClicks) {

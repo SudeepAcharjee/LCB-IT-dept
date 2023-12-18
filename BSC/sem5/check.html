@@ -91,7 +91,7 @@
     const dataContainer = document.querySelector('tbody')
 
     // give complete path to fetch data as given during sending
-    var fetchedData = database.ref('BSC/2nd-sem/')
+    var fetchedData = database.ref('BSC/5th-sem/')
     fetchedData.on('value', (snapshot) => {
         var data = snapshot.val()
         // now set data in table
@@ -116,7 +116,7 @@
 
     // remove message function
     function removeMess(uniqueId){
-        database.ref('BSC/2nd-sem/' + uniqueId).remove()
+        database.ref('BSC/5th-sem/' + uniqueId).remove()
         // this realtime remove will delete data without any loading
         // as data is updated, it refetch and rerender in html automatically
     }
@@ -147,7 +147,7 @@
         }
         // create reference to the data first where data will update
         // uniqueId will be the id of each message in db
-        var listRef = database.ref('BSC/2nd-sem/' + uniqueId)
+        var listRef = database.ref('BSC/5th-sem/' + uniqueId)
         // now provide updated data
         listRef.update(obj)
         // after update new data will rerender automatically
