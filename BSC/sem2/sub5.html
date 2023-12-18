@@ -79,7 +79,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Attendance for Subject3</h1>
+        <h1>Attendance for Subject5</h1>
         <a href="./dashboard.html" class="button-link">Dashboard</a>
         <table>
             <thead>
@@ -108,7 +108,7 @@
         const dataContainer = document.querySelector('tbody');
 
         // give complete path to fetch data as given during sending
-        var fetchedData = database.ref('BSC/1st-sem/');
+        var fetchedData = database.ref('BSC/2nd-sem/');
         fetchedData.on('value', (snapshot) => {
             var data = snapshot.val();
             // now set data in the table
@@ -132,7 +132,7 @@
 
         function countClicks(entryId) {
             // Reference to the specific entry's click count in the database
-            var CProgrammingRef = database.ref('BSC/1st-sem/' + entryId + '/sub5');
+            var CProgrammingRef = database.ref('BSC/2nd-sem/' + entryId + '/sub5');
 
             // Transaction to increment the click count
             CProgrammingRef.transaction(function(currentClicks) {
