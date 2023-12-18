@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assest/styles.css">
+    
+    <title>Subject Selection</title>
+</head>
+<body>
+    <h2>BCA-IT Attendance System</h2>
+    <div class="container">
+        
+        <h1>Select Subjects</h1>
+        <div class="semester-selection">
+            <a href="./sub1.html">Subject 1</a>
+            <a href="./sub2.html">Subject 2</a>
+            <a href="./sub3.html">Subject 3</a>
+            <a href="./sub4.html">Subject 4</a>
+            <a href="./sub5.html">Subject 5</a>
+            <a href="#">Subject 6</a>
+           
+        </div>
+        <div class="button-container">
+            <!-- <button class="add-student-btn">Add Student</button> -->
+           
+            <a href="../login-teachers.html" class="button-link">Logout</a>
+            <a href="./add.html" class="button-link1">Add-Student</a>
+            <a href="./check.html" class="button-link1">Check</a>
+            <a href="https://console.firebase.google.com/u/3/project/attendance-system-9297a/database/attendance-system-9297a-default-rtdb/data" class="button-link1">Database</a>
+            <a href="./show.html" class="button-link1">Show-Attendance Data</a>
+        </div>
+        
+    </div>
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+
+
+
+        const firebaseConfig = {
+
+            apiKey: "AIzaSyA6w5I07tZYvLe7eDclzk2LesZHgukS2Fc",
+
+            authDomain: "attendance-system-9297a.firebaseapp.com",
+
+            databaseURL: "https://attendance-system-9297a-default-rtdb.firebaseio.com",
+
+            projectId: "attendance-system-9297a",
+
+            storageBucket: "attendance-system-9297a.appspot.com",
+
+            messagingSenderId: "415117796338",
+
+            appId: "1:415117796338:web:fcdf8ecf947bca306c416b"
+
+
+        };
+
+
+
+        const app = initializeApp(firebaseConfig);
+
+        const auth = getAuth();
+
+        console.log(app);
+
+
+
+        onAuthStateChanged(auth, (user) => {
+
+            if (user) {
+
+                alert("Welcome teachers to BCA online Attendance System");
+
+                //   console.log(user);
+
+
+
+            } else {
+
+                // User is not signed in, redirect to the login page
+
+                window.location.href = "../login-teachers.html";
+
+            }
+
+        });
+
+      
+      
+    </script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students Realtime-Databases</title>
+   <style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    h1 {
+        color: #333;
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    tbody tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .container {
+            padding: 10px;
+        }
+
+        th, td {
+            padding: 0px;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <div class="container">
+        <h1> Students database</h1>
+        <a href="./dashboard.html" class="button-link">Dashboard</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Roll-No</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+<!-- add firebase CDN -->
+<script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-database-compat.js"></script>
+
+<script>
+    const firebaseConfig = {
+        databaseURL: "https://attendance-system-9297a-default-rtdb.firebaseio.com/"
+    }
+    firebase.initializeApp(firebaseConfig)
+    // here connection is created with database
+    const database = firebase.database()
+
+    const dataContainer = document.querySelector('tbody')
+
+    // give complete path to fetch data as given during sending
+    var fetchedData = database.ref('BCA/5th-sem/')
+    fetchedData.on('value', (snapshot) => {
+        var data = snapshot.val()
+        // now set data in table
+        var htmlData = ''
+        for(var key in data){
+            var value = data[key]
+            htmlData += `
+                <tr>
+                    <td>${value.name}</td>
+                    <td>${value.roll}</td>
+                    
+                    <td>
+                        <button onclick="readyForUpdate('${key}', this)">Update</button>
+                        <button onclick="removeMess('${key}')">Delete</button>
+                    </td>
+                </tr>
+            `;
+        }
+        // we use unique id's as reference to delete and update data
+        dataContainer.innerHTML = htmlData
+    })
+
+    // remove message function
+    function removeMess(uniqueId){
+        database.ref('BCA/5th-sem/' + uniqueId).remove()
+        // this realtime remove will delete data without any loading
+        // as data is updated, it refetch and rerender in html automatically
+    }
+
+    // update function 
+    function readyForUpdate(uniqueId, elem){
+        // lets ready for update
+        // it will get all the td of the tr in which btn in clicked
+        var siblingTd = elem.parentElement.parentElement.getElementsByTagName('td')
+        // convert first three td to editable
+        for(var i = 0; i < siblingTd.length-1; i++){
+            siblingTd[i].contentEditable = true
+            siblingTd[i].classList.add('temp-update-class')
+        }
+        // also change onclick function
+        elem.setAttribute('onclick', `updateNow('${uniqueId}')`)
+        elem.innerHTML = 'Send'
+    }
+
+    // create updateNow function
+    function updateNow(uniqueId){
+        var contentId = document.querySelectorAll('.temp-update-class')
+        // now create obj using same keys as used during sending
+        var obj = {
+            'name': contentId[0].textContent,
+            'roll': contentId[1].textContent,
+           
+        }
+        // create reference to the data first where data will update
+        // uniqueId will be the id of each message in db
+        var listRef = database.ref('BCA/5th-sem/' + uniqueId)
+        // now provide updated data
+        listRef.update(obj)
+        // after update new data will rerender automatically
+        // same as during delete
+    }
+
+</script>
+<script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+
+
+
+    const firebaseConfig1 = {
+
+        apiKey: "AIzaSyA6w5I07tZYvLe7eDclzk2LesZHgukS2Fc",
+
+        authDomain: "attendance-system-9297a.firebaseapp.com",
+
+        databaseURL: "https://attendance-system-9297a-default-rtdb.firebaseio.com",
+
+        projectId: "attendance-system-9297a",
+
+        storageBucket: "attendance-system-9297a.appspot.com",
+
+        messagingSenderId: "415117796338",
+
+        appId: "1:415117796338:web:fcdf8ecf947bca306c416b"
+
+
+    };
+
+
+
+    const app = initializeApp(firebaseConfig1);
+
+    const auth = getAuth();
+
+    console.log(app);
+
+
+
+    onAuthStateChanged(auth, (user) => {
+
+        if (user) {
+
+            // alert("Welcome teachers to BCA online Attendance System");
+
+              console.log(user);
+
+
+
+        } else {
+
+            // User is not signed in, redirect to the login page
+
+            window.location.href = "../login-teachers.html";
+
+        }
+
+    });
+
+  
+  
+</script>  
+</body>
+</html>
