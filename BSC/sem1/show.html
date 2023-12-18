@@ -12,7 +12,16 @@
             padding: 0;
             background-color: #f4f4f4;
         }
-
+        #printButton {
+            display: block;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            }
         .container {
             max-width: 800px;
             margin: 50px auto;
@@ -70,13 +79,17 @@
                     <th>Subject1 </th>
                     <th>Subject2 </th>
                     <th>Subject3 </th>
+                    <th>Subject4 </th>
+                    <th>Subject5 </th>
                 </tr>
             </thead>
             <tbody id="studentData">
                 <!-- Data will be displayed here dynamically -->
             </tbody>
         </table>
+        <button id="printButton" onclick="printPage()">Print Page</button>
     </div>
+    
 
     <!-- Firebase JavaScript SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
@@ -104,11 +117,17 @@
                         <td>${value.sub1 || 0}</td>
                         <td>${value.sub2 || 0}</td>
                         <td>${value.sub3 || 0}</td>
+                        <td>${value.sub4 || 0}</td>
+                        <td>${value.sub5 || 0}</td>
                     </tr>
                 `;
             }
             dataContainer.innerHTML = htmlData;
         });
+
+        function printPage() {
+      window.print();
+    }
     </script>
      <script type="module">
 
