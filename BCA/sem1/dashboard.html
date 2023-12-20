@@ -31,6 +31,23 @@
         </div>
         
     </div>
+    <script>
+        // Function to prompt user for subject name and update the link
+        function editSubject(subjectId) {
+            const newSubjectName = prompt('Enter the new subject name:');
+            if (newSubjectName !== null) {
+                document.getElementById(subjectId).innerText = newSubjectName;
+            }
+        }
+    
+        // Add click event listeners for each subject link
+        for (let i = 1; i <= 6; i++) {
+            const subjectId = 'subject' + i;
+            document.getElementById(subjectId).addEventListener('click', function () {
+                editSubject(subjectId);
+            });
+        }
+    </script>
     <script type="module">
 
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
