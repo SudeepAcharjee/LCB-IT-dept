@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editable Text</title>
+    <style>
+        .editable-text {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            min-height: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="editableDiv" class="editable-text" contenteditable="true">Click to edit me</div>
+
+<script>
+    // Get the editable div element
+    const editableDiv = document.getElementById('editableDiv');
+
+    // Add an event listener to capture changes
+    editableDiv.addEventListener('input', function() {
+        // Log the updated content to the console
+        console.log('Updated Content:', editableDiv.innerHTML);
+    });
+</script>
+
+</body>
+</html>

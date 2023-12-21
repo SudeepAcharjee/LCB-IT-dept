@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changing Subject Name</title>
+    <style>
+        /* Your CSS styles here */
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Changing Subject Name</h1>
+        <a href="./dashboard.html" class="button-link">Dashboard</a>
+        <div class="form">
+            <label>Name</label>
+            <input type="text" id="subjectInput">
+            <button onclick="sendData()">Submit</button>
+        </div>
+        <div class="subject-link" id="subjectLinkContainer">
+            <!-- This div will contain the subject name as a link -->
+        </div>
+    </div>
+
+    <!-- Firebase scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-database-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            databaseURL: "https://attendance-system-9297a-default-rtdb.firebaseio.com/"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        function sendData() {
+            var subject = document.getElementById('subjectInput').value;
+
+            // Push the subject name to the database
+            var listRef = database.ref('BCA/1st-sem/');
+            var newRef = listRef.child(subject);
+
+            newRef.set({
+                'subject': subject
+            });
+
+            // Display the subject name as a link
+            displaySubjectLink(subject);
+        }
+
+        function displaySubjectLink(subject) {
+            const linkContainer = document.getElementById('subjectLinkContainer');
+            const link = document.createElement('a');
+            link.href = '#' + subject; // Add the appropriate href
+            link.textContent = subject;
+            linkContainer.appendChild(link);
+        }
+    </script>
+
+    <script type="module">
+        // Your authentication script
+    </script>
+</body>
+
+</html>
