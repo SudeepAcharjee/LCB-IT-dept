@@ -55,6 +55,7 @@ const signIn = () => {
         .catch((error) => {
             console.log(error.code);
             console.log(error.message)
+            alert("Login Error")
         });
 }
 
