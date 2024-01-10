@@ -12,7 +12,12 @@
             padding: 0;
             background-color: #f4f4f4;
         }
-    
+    /* Define styles for the clicked class */
+.clicked {
+    background-color: #f42714; /* Green color (you can adjust this) */
+    color: white;
+}
+
         .container {
             max-width: 800px;
             margin: 50px auto;
@@ -116,14 +121,15 @@
             for(var key in data){
                 var value = data[key];
                 htmlData += `
-                    <tr>
-                        <td>${value.name}</td>
-                        <td>${value.roll}</td>
-                        <td>
-                            <button onclick="countClicks('${key}')">Count</button>
-                            <p>Attendance: <span id="sub1-${key}">0</span></p>
-                        </td>
-                    </tr>
+                <tr>
+    <td>${value.name}</td>
+    <td>${value.roll}</td>
+    <td>
+        <button onclick="countClicks('${key}', this)">Count</button>
+        <p>Attendance: <span id="sub1-${key}">0</span></p>
+    </td>
+</tr>
+
                 `;
             }
             // we use unique id's as reference to delete and update data
@@ -146,6 +152,15 @@
                 }
             });
         }
+    </script>
+    <script>
+        function countClicks(key, button) {
+    // Your existing logic for counting clicks goes here
+
+    // Change button color
+    button.classList.add('clicked');
+}
+
     </script>
    
    <script type="module" src="../auth.js"> 
