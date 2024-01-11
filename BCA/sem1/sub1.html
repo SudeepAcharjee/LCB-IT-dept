@@ -68,6 +68,9 @@
             display: block;
             margin: 20px auto; /* Center the button */
         }
+                /* Define the default styles for the button */
+       
+        
 
         @media only screen and (max-width: 600px) {
             button {
@@ -120,7 +123,7 @@
                         <td>${value.name}</td>
                         <td>${value.roll}</td>
                         <td>
-                            <button onclick="countClicks('${key}')">Count</button>
+                            <button class="hover-button" onclick="countClicks('${key}')">Count</button>
                             <p>Attendance: <span id="sub1-${key}">0</span></p>
                         </td>
                     </tr>
@@ -129,6 +132,17 @@
             // we use unique id's as reference to delete and update data
             dataContainer.innerHTML = htmlData;
         });
+
+            function countClicks(){
+                var button = document.querySelector('button');
+            if (button) {
+                button.disabled = true;
+                
+            }
+
+            }
+
+
 
         function countClicks(entryId) {
             // Reference to the specific entry's click count in the database
@@ -141,6 +155,7 @@
                 if (committed) {
                     // Update the display for the specific entry
                     document.getElementById('sub1-' + entryId).textContent = snapshot.val();
+                    
                 } else {
                     console.error('Transaction failed:', error);
                 }
@@ -150,5 +165,7 @@
    
    <script type="module" src="../auth.js"> 
    </script>  
+   
+   
 </body>
 </html>
