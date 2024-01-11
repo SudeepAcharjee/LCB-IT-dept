@@ -68,7 +68,8 @@
             display: block;
             margin: 20px auto; /* Center the button */
         }
-                /* Define the default styles for the button */
+        
+        
        
         
 
@@ -132,17 +133,6 @@
             // we use unique id's as reference to delete and update data
             dataContainer.innerHTML = htmlData;
         });
-
-            function countClicks(){
-                var button = document.querySelector('button');
-            if (button) {
-                button.disabled = true;
-                
-            }
-
-            }
-
-
 
         function countClicks(entryId) {
             // Reference to the specific entry's click count in the database
