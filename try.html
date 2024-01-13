@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subject 1</title>
+    <title>Dashboard</title>
     <style>
         body {
     font-family: 'Arial', sans-serif;
@@ -14,15 +14,16 @@
 }
 
 .container {
-    max-width: 800px;
-    margin: 50px auto;
+    max-width: 100%;
+    margin: 20px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
+    overflow-x: auto; /* Enable horizontal scrolling on smaller screens */
 }
 
-h1 {
+h1, h2 {
     color: #333;
     text-align: center;
 }
@@ -48,21 +49,15 @@ tbody tr:hover {
     background-color: #f5f5f5;
 }
 
-button {
-    background-color: #4CAF50;
+#printButton {
+    display: block;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #4caf50;
     color: white;
     border: none;
     border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
     cursor: pointer;
-    display: block;
-    margin: 20px auto; /* Center the button */
-}
-
-button[disabled] {
-    background-color: #808080; /* Change color for disabled button */
-    cursor: not-allowed;
 }
 
 @media only screen and (max-width: 600px) {
@@ -71,26 +66,7 @@ button[disabled] {
     }
 
     th, td {
-        padding: 0px;
-    }
-
-    button {
-        width: 100%;
-        margin: 10px 0; /* Adjust margin for smaller screens */
-    }
-}
-
-@media only screen and (max-width: 450px) {
-    h1 {
-        font-size: 18px;
-    }
-
-    th, td {
-        font-size: 12px;
-    }
-
-    button {
-        font-size: 14px;
+        padding: 8px;
     }
 }
 
@@ -98,21 +74,31 @@ button[disabled] {
 </head>
 <body>
     <div class="container">
-        <h1>Attendance for Subject1</h1>
-        <a href="./dashboard.html" class="button-link">Dashboard</a>
+        <h1>Attendance-Dashboard</h1>
+        <h2>
+            Name:
+            ROll No:
+        </h2>
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Roll-No</th>
-                    <th>Actions</th>
+                    <th>Subject1 </th>
+                    <th>Subject2 </th>
+                    <th>Subject3 </th>
+                    <th>Subject4 </th>
+                    <th>Subject5 </th>
+                    <th>Date&time</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="studentData">
+                <!-- Data will be displayed here dynamically -->
             </tbody>
         </table>
+        <button id="printButton" onclick="printPage()">Print Page</button>
     </div>
-    <!-- add firebase CDN -->
+    
+
+    <!-- Firebase JavaScript SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-database-compat.js"></script>
 
@@ -121,141 +107,95 @@ button[disabled] {
             databaseURL: "https://attendance-system-9297a-default-rtdb.firebaseio.com/"
         }
         firebase.initializeApp(firebaseConfig);
-        // here connection is created with database
         const database = firebase.database();
 
-        const dataContainer = document.querySelector('tbody');
+        const dataContainer = document.getElementById('studentData');
 
-        // give complete path to fetch data as given during sending
         var fetchedData = database.ref('BCA/1st-sem/');
-fetchedData.on('value', (snapshot) => {
-    var data = snapshot.val();
-    var htmlData = '';
-    for (var key in data) {
-        var value = data[key];
-        var attendanceValue = value.sub1 || 0; // Default to 0 if sub1 is not defined
+        fetchedData.on('value', (snapshot) => {
+            var data = snapshot.val();
+            var htmlData = '';
+            for (var key in data) {
+                var value = data[key];
+                htmlData += `
+                    <tr>
+                        <td>${value.sub1 || 0}</td>
+                        <td>${value.sub2 || 0}</td>
+                        <td>${value.sub3 || 0}</td>
+                        <td>${value.sub4 || 0}</td>
+                        <td>${value.sub5 || 0}</td>
+                     </tr>
+                     <tr>   
+                        <td>${value.dates.join ('<br>')}</td>
+                    </tr>
+                `;
+            }
+            dataContainer.innerHTML = htmlData;
+        });
 
-        htmlData += `
-            <tr>
-                <td>${value.name}</td>
-                <td>${value.roll}</td>
-                <td>
-                    <button onclick="countClicks('${key}', this); handleClick2(this);" 
-                            id="countButton-${key}">Count</button>
-                    <button onclick="decountClicks('${key}', this);" 
-                            id="decountButton-${key}">Min</button>
-                    <p>Attendance: <span id="sub1-${key}">${attendanceValue}</span></p>
-                </td>
-            </tr>
-        `;
+        function printPage() {
+      window.print();
     }
-    dataContainer.innerHTML = htmlData;
-});
+    </script>
+     <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
 
 
-function countClicks(entryId, button) {
-            // Reference to the specific entry's attendance count in the database
-            var attendanceRef = database.ref('BCA/1st-sem/' + entryId + '/sub1');
 
-            // Reference to the specific entry's dates in the database
-            var datesRef = database.ref('BCA/1st-sem/' + entryId + '/dates');
+        const firebaseConfig1 = {
 
-            // Get current date and time
-            var currentDate = new Date();
-            var formattedDate = currentDate.toLocaleString();
+            apiKey: "AIzaSyA6w5I07tZYvLe7eDclzk2LesZHgukS2Fc",
 
-            // Transaction to increment the attendance count
-            attendanceRef.transaction(function (currentAttendance) {
-                return (currentAttendance || 0) + 1;
-            }, function (error, committed, snapshot) {
-                if (committed) {
-                    // Fetch existing dates from the database
-                    datesRef.once('value').then(function (datesSnapshot) {
-                        var existingDates = datesSnapshot.val() || [];
+            authDomain: "attendance-system-9297a.firebaseapp.com",
 
-                        // Add the current date to the array
-                        existingDates.push(formattedDate);
+            databaseURL: "https://attendance-system-9297a-default-rtdb.firebaseio.com",
 
-                        // Update the dates in the database
-                        datesRef.set(existingDates);
+            projectId: "attendance-system-9297a",
 
-                        // Update the display for the specific entry
-                        updateAttendanceDisplay(entryId, snapshot.val(), formattedDate);
-                    });
-                } else {
-                    console.error('Transaction failed:', error);
-                }
+            storageBucket: "attendance-system-9297a.appspot.com",
 
-                // Re-enable the button whether the transaction succeeds or fails
-                button.disabled = false;
-            });
-        }
+            messagingSenderId: "415117796338",
 
-        function decountClicks(entryId, button) {
-            // Reference to the specific entry's attendance count in the database
-            var attendanceRef = database.ref('BCA/1st-sem/' + entryId + '/sub1');
+            appId: "1:415117796338:web:fcdf8ecf947bca306c416b"
 
-            // Transaction to decrement the attendance count
-            attendanceRef.transaction(function (currentAttendance) {
-                return Math.max((currentAttendance || 0) - 1, 0);
-            }, function (error, committed, snapshot) {
-                if (committed) {
-                    // Update the display for the specific entry
-                    // updateAttendanceDisplay(entryId, snapshot.val(), getLastGivenDate(entryId));
-                } else {
-                    console.error('Transaction failed:', error);
-                }
 
-                // Re-enable the button whether the transaction succeeds or fails
-                button.disabled = false;
-            });
-        }
+        };
 
-        function updateAttendanceDisplay(entryId, attendanceCount, lastGivenDate) {
-            // Create a new paragraph element to display the attendance information
-            var attendanceInfo = document.createElement('p');
-            attendanceInfo.innerHTML = `Last Given: ${attendanceCount} (Given on: ${lastGivenDate})`;
 
-            // Get the parent element and append the new paragraph
-            var attendanceContainer = document.getElementById('sub1-' + entryId);
-            attendanceContainer.innerHTML = ''; // Clear existing content
-            attendanceContainer.appendChild(attendanceInfo);
 
-            // Store the last given date in a variable
-            var lastGivenDateVariable = lastGivenDate;
-            // You can use 'lastGivenDateVariable' as needed (e.g., for refreshing the page)
-            console.log('Last Given Date:', lastGivenDateVariable);
-        }
+        const app = initializeApp(firebaseConfig1);
 
-        function getLastGivenDate(entryId) {
-            // Reference to the specific entry's dates in the database
-            var datesRef = database.ref('BCA/1st-sem/' + entryId + '/dates');
+        const auth = getAuth();
 
-            // Fetch the last given date from the database
-            return datesRef.once('value').then(function (datesSnapshot) {
-                var existingDates = datesSnapshot.val() || [];
-                return existingDates.length > 0 ? existingDates[existingDates.length - 1] : 'N/A';
-            });
-        }
+        console.log(app);
 
-</script>
-   
-   <script type="module" src="../auth.js"> 
-   </script>  
-   <script>
-    function handleClick1() {
-        alert("Function 1 executed");
-        // Add more code for Function 1 if needed
-    }
 
-    function handleClick2(button) {
-        console.log("Function 2 executed");
-        // Add more code for Function 2 if needed
 
-        // Disable the button
-        button.disabled = true;
-    }
-</script>
-   
+        onAuthStateChanged(auth, (user) => {
+
+            if (user) {
+
+                alert("Welcome teachers to BCA online Attendance System");
+
+                //   console.log(user);
+
+
+
+            } else {
+
+                // User is not signed in, redirect to the login page
+
+                window.location.href = "../login-teachers.html";
+
+            }
+
+        });
+
+      
+      
+    </script>
 </body>
 </html>
