@@ -4,77 +4,96 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>subject 5</title>
+    <title>Subject 5</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-    
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
-    
-        h1 {
-            color: #333;
-            text-align: center;
-        }
-    
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-    
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-    
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-    
-        tbody tr:hover {
-            background-color: #f5f5f5;
-        }
-    
-        @media only screen and (max-width: 600px) {
-            .container {
-                padding: 10px;
-            }
-    
-            th, td {
-                padding: 0px;
-            }
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            display: block;
-            margin: 20px auto; /* Center the button */
-        }
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
 
-        @media only screen and (max-width: 600px) {
-            button {
-                width: 100%;
-                margin: 10px 0; /* Adjust margin for smaller screens */
-            }
-        }
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto; /* Center the button */
+}
+
+button[disabled] {
+    background-color: #808080; /* Change color for disabled button */
+    cursor: not-allowed;
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    th, td {
+        padding: 0px;
+    }
+
+    button {
+        width: 100%;
+        margin: 10px 0; /* Adjust margin for smaller screens */
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    h1 {
+        font-size: 18px;
+    }
+
+    th, td {
+        font-size: 12px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -109,47 +128,134 @@
 
         // give complete path to fetch data as given during sending
         var fetchedData = database.ref('BCA/4th-sem/');
-        fetchedData.on('value', (snapshot) => {
-            var data = snapshot.val();
-            // now set data in the table
-            var htmlData = '';
-            for(var key in data){
-                var value = data[key];
-                htmlData += `
-                    <tr>
-                        <td>${value.name}</td>
-                        <td>${value.roll}</td>
-                        <td>
-                            <button onclick="countClicks('${key}')">Count</button>
-                            <p>Attendance: <span id="sub5-${key}">0</span></p>
-                        </td>
-                    </tr>
-                `;
-            }
-            // we use unique id's as reference to delete and update data
-            dataContainer.innerHTML = htmlData;
-        });
+fetchedData.on('value', (snapshot) => {
+    var data = snapshot.val();
+    var htmlData = '';
+    for (var key in data) {
+        var value = data[key];
+        var attendanceValue = value.sub5 || 0; // Default to 0 if sub5 is not defined
 
-        function countClicks(entryId) {
-            // Reference to the specific entry's click count in the database
-            var CProgrammingRef = database.ref('BCA/4th-sem/' + entryId + '/sub5');
+        htmlData += `
+            <tr>
+                <td>${value.name}</td>
+                <td>${value.roll}</td>
+                <td>
+                    <button onclick="countClicks('${key}', this); handleClick2(this);" 
+                            id="countButton-${key}">Count</button>
+                    <button onclick="decountClicks('${key}', this);" 
+                            id="decountButton-${key}">Min</button>
+                    <p>Attendance: <span id="sub5-${key}">${attendanceValue}</span></p>
+                </td>
+            </tr>
+        `;
+    }
+    dataContainer.innerHTML = htmlData;
+});
 
-            // Transaction to increment the click count
-            CProgrammingRef.transaction(function(currentClicks) {
-                return (currentClicks || 0) + 1;
-            }, function(error, committed, snapshot) {
+
+function countClicks(entryId, button) {
+            // Reference to the specific entry's attendance count in the database
+            var attendanceRef = database.ref('BCA/4th-sem/' + entryId + '/sub5');
+
+            // Reference to the specific entry's dates in the database
+            var datesRef = database.ref('BCA/4th-sem/' + entryId + '/dates');
+
+            // Get current date and time
+            var currentDate = new Date();
+            var formattedDate = currentDate.toLocaleString();
+
+            // Transaction to increment the attendance count
+            attendanceRef.transaction(function (currentAttendance) {
+                return (currentAttendance || 0) + 1;
+            }, function (error, committed, snapshot) {
                 if (committed) {
-                    // Update the display for the specific entry
-                    document.getElementById('sub5-' + entryId).textContent = snapshot.val();
+                    // Fetch existing dates from the database
+                    datesRef.once('value').then(function (datesSnapshot) {
+                        var existingDates = datesSnapshot.val() || [];
+
+                        // Add the current date to the array
+                        existingDates.push(formattedDate);
+
+                        // Update the dates in the database
+                        datesRef.set(existingDates);
+
+                        // Update the display for the specific entry
+                        updateAttendanceDisplay(entryId, snapshot.val(), formattedDate);
+                    });
                 } else {
                     console.error('Transaction failed:', error);
                 }
+
+                // Re-enable the button whether the transaction succeeds or fails
+                button.disabled = false;
             });
         }
-    </script>
+
+        function decountClicks(entryId, button) {
+            // Reference to the specific entry's attendance count in the database
+            var attendanceRef = database.ref('BCA/4th-sem/' + entryId + '/sub5');
+
+            // Transaction to decrement the attendance count
+            attendanceRef.transaction(function (currentAttendance) {
+                return Math.max((currentAttendance || 0) - 1, 0);
+            }, function (error, committed, snapshot) {
+                if (committed) {
+                    // Update the display for the specific entry
+                    // updateAttendanceDisplay(entryId, snapshot.val(), getLastGivenDate(entryId));
+                } else {
+                    console.error('Transaction failed:', error);
+                }
+
+                // Re-enable the button whether the transaction succeeds or fails
+                button.disabled = false;
+            });
+        }
+
+        function updateAttendanceDisplay(entryId, attendanceCount, lastGivenDate) {
+            // Create a new paragraph element to display the attendance information
+            var attendanceInfo = document.createElement('p');
+            attendanceInfo.innerHTML = `Last Given: ${attendanceCount} (Given on: ${lastGivenDate})`;
+
+            // Get the parent element and append the new paragraph
+            var attendanceContainer = document.getElementById('sub5-' + entryId);
+            attendanceContainer.innerHTML = ''; // Clear existing content
+            attendanceContainer.appendChild(attendanceInfo);
+
+            // Store the last given date in a variable
+            var lastGivenDateVariable = lastGivenDate;
+            // You can use 'lastGivenDateVariable' as needed (e.g., for refreshing the page)
+            console.log('Last Given Date:', lastGivenDateVariable);
+        }
+
+        function getLastGivenDate(entryId) {
+            // Reference to the specific entry's dates in the database
+            var datesRef = database.ref('BCA/4th-sem/' + entryId + '/dates');
+
+            // Fetch the last given date from the database
+            return datesRef.once('value').then(function (datesSnapshot) {
+                var existingDates = datesSnapshot.val() || [];
+                return existingDates.length > 0 ? existingDates[existingDates.length - 1] : 'N/A';
+            });
+        }
+
+</script>
    
-      
    <script type="module" src="../auth.js"> 
-</script>     
+   </script>  
+   <script>
+    function handleClick1() {
+        alert("Function 1 executed");
+        // Add more code for Function 1 if needed
+    }
+
+    function handleClick2(button) {
+        console.log("Function 2 executed");
+        // Add more code for Function 2 if needed
+
+        // Disable the button
+        button.disabled = true;
+    }
+</script>
+   
 </body>
 </html>
